@@ -2,38 +2,29 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Post extends Model
 {
-
-    use HasFactory, Notifiable, HasApiTokens;
-
+    use HasFactory;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    // protected $table = 'users';
+    // protected $table = 'posts';
     // protected $primaryKey = 'id';
     // public $timestamps = true;
     // protected $guarded = [];
     protected $fillable = [
-        'name',
-        'last_name',
-        'is_admin',
-        'email',
-        'password',
+        'title',
+        'content',
+        'user_id'
     ];
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // protected $hidden = [
+    // ];
     // protected $dates = [];
 
     /*
@@ -42,22 +33,15 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
 
-    public function posts(){
-        return $this->hasMany(Post::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /*
